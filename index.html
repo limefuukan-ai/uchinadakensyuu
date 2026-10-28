@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>内灘町の「食」 - 食の魅力を感じるサイト</title>
+  <style>
+    :root {
+      --primary-color: #196DAC;
+      --secondary-color: #186845;
+      --light-blue: #a8d0ff;
+      --sunrise: #ffddb5;
+      --sunset: #ffb385;
+      --sand: #f5deb3;
+      --white: #ffffff;
+      --dark-sand: #c2b280;
+    }
+    /* ベーススタイル */
+    body {
+      margin: 0;
+      font-family: "ヒラギノ角ゴシック", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+      background: linear-gradient(to bottom, var(--sunrise), var(--light-blue) 30%, var(--sand) 60%, var(--sunset));
+      color: var(--primary-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.6rem;
+      box-shadow: 0 3px 6px rgb(25 109 172 / 0.7);
+      z-index: 10;
+      position: relative;
+    }
+    main {
+      flex: 1;
+      padding: 1rem 1.5rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 1;
+      position: relative;
+    }
+    main.visible {
+      opacity: 1;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    h2 {
+      border-bottom: 3px solid var(--secondary-color);
+      padding-bottom: 0.3rem;
+      margin-bottom: 0.8rem;
+    }
+    section {
+      margin-bottom: 2.5rem;
+      background: rgba(255 255 255 / 0.85);
+      border-radius: 10px;
+      padding: 1rem 1rem 1.5rem;
+      box-shadow: 0 4px 8px rgb(24 104 69 / 0.3);
+      position: relative;
+    }
+    .image-box {
+      background-color: var(--dark-sand);
+      height: 180px;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.25rem;
+      user-select: none;
+      box-shadow: inset 0 0 5px rgb(25 109 172 / 0.3);
+    }
+    p {
+      line-height: 1.5;
+      font-size: 1.05rem;
+      color: #333;
+      margin: 0 0 0.9rem;
+    }
+    .wave {
+      width: 100%;
+      height: 30px;
+      background: repeating-linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--secondary-color) 5px,
+        var(--primary-color) 5px,
+        var(--primary-color) 10px
+      );
+      border-radius: 15px 15px 0 0;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgb(24 104 69 / 0.4);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem 0.75rem;
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+      background: var(--primary-color);
+      box-shadow: 0 -3px 6px rgb(25 109 172 / 0.6);
+      user-select: none;
+    }
+    .friendly-box {
+      border: 2px dashed var(--primary-color);
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      background: rgba(25 109 172 / 0.12);
+      box-sizing: border-box;
+    }
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+      .image-box {
+        height: 140px;
+        font-size: 1.05rem;
+      }
+      header {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* 驚きの全画面アニメーション */
+    #surprise {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(45deg,
+        #ff6f91,
+        #ff9671,
+        #ffc75f,
+        #f9f871,
+        #a8d0ff,
+        #196DAC,
+        #186845,
+        #a8d0ff);
+      background-size: 1600% 1600%;
+      animation: gradientMove 6s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      color: white;
+      font-size: 3rem;
+      font-weight: 900;
+      font-family: "Arial Black", Gadget, sans-serif;
+      user-select: none;
+      text-shadow:
+        3px 3px 5px rgba(0,0,0,0.5);
+      cursor: default;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    #surprise .emoji {
+      font-size: 4.5rem;
+      margin-bottom: 0.5rem;
+      animation: bounce 1.4s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% {transform: translateY(0);}
+      50% {transform: translateY(-15px);}
+    }
+
+    /* カモメのスタイルとアニメーション */
+    .seagull {
+      position: absolute;
+      top: 10%; /* 基本の高さ調整 */
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      animation-timing-function: linear;
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+      user-select: none;
+    }
+    .seagull svg {
+      width: 100%;
+      height: 100%;
+      fill: white;
+      stroke: var(--primary-color);
+      stroke-width: 1.5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    /* カモメの飛行パスアニメーション */
+    @keyframes flyRight1 {
+      0% {transform: translateX(-60px) translateY(0) rotate(0deg);}
+      50% {transform: translateX(50vw) translateY(20px) rotate(10deg);}
+      100% {transform: translateX(110vw) translateY(0) rotate(0deg);}
+    }
+    @keyframes flyRight2 {
+      0% {transform: translateX(-100px) translateY(30px) rotate(-10deg);}
+      50% {transform: translateX(45vw) translateY(10px) rotate(15deg);}
+      100% {transform: translateX(110vw) translateY(0) rotate(0deg);}
+    }
+    @keyframes flyRight3 {
+      0% {transform: translateX(-80px) translateY(15px) rotate(5deg);}
+      50% {transform: translateX(60vw) translateY(25px) rotate(-10deg);}
+      100% {transform: translateX(110vw) translateY(10px) rotate(0deg);}
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 驚きモーダル -->
+  <div id="surprise" role="alert" aria-live="assertive" aria-label="ようこそ、内灘町の食のサイトへ">
+    <div class="emoji" aria-hidden="true">🌅🍙🐄</div>
+    <div>内灘町の「食」へようこそ！</div>
+
+    <!-- カモメ 3羽を追加 -->
+    <div class="seagull" style="top:12%; animation: flyRight1 12s linear infinite; animation-delay: 0s;">
+      <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false" >
+        <path d="M2 22c8-10 20-10 28 0m-6 0c8-6 14-6 20 0" />
+      </svg>
+    </div>
+    <div class="seagull" style="top:18%; animation: flyRight2 14s linear infinite; animation-delay: 4s;">
+      <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false" >
+        <path d="M2 22c8-10 20-10 28 0m-6 0c8-6 14-6 20 0" />
+      </svg>
+    </div>
+    <div class="seagull" style="top:10%; animation: flyRight3 13s linear infinite; animation-delay: 7s;">
+      <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false" >
+        <path d="M2 22c8-10 20-10 28 0m-6 0c8-6 14-6 20 0" />
+      </svg>
+    </div>
+  </div>
+  
+  <header>
+    内灘町の「食」 - 海と砂丘の恵みを楽しもう！
+  </header>
+  <main id="mainContent" tabindex="-1">
+    <section>
+      <h2>内灘餅</h2>
+      <div class="image-box" aria-label="内灘餅の画像スペース">No image</div>
+      <div class="friendly-box">
+        <p>砂丘地で穫れる落花生をふんだんに入れた、優しい甘さの「ピーナッツ餅」は、内灘町の西荒屋地区で昔から子どもたちに愛されてきたおやつです。</p>
+        <p>昔ながらの味を絶やさないよう、西荒屋地区の地域おこし団体「西荒屋営農促進会」のメンバーが、「内灘餅」として、ひとつひとつ丁寧に手作業で製造・販売しています。ピーナッツも餅米もMade in 内灘。風味豊かな食感と優しい甘さが特徴です。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>砂丘の真珠（らっきょう）</h2>
+      <div class="image-box" aria-label="砂丘の真珠（らっきょう）の画像スペース">No image</div>
+      <div class="friendly-box">
+        <p>内灘砂丘で採れた3年子らっきょうは、ひと粒ひと粒、手作業で丁寧に皮を取り酢漬けしており、シャキシャキとした歯ごたえが特徴です。</p>
+        <p>「おいCまち内灘」は、無農薬・非化学肥料を使用し、町内の高校生や高齢者の方とも連携して加工・販売を行っています。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>ミルク王国</h2>
+      <div class="image-box" aria-label="ミルク王国の画像スペース">No image</div>
+      <div class="friendly-box">
+        <p>内灘町は日本海に面し、河北潟や内灘砂丘が広がる町です。河北潟干拓地では酪農が営まれ、令和5年度には石川県の牛乳生産量の61%を内灘町産が占めています。</p>
+        <p>「ミルク王国ウチナダ」では、内灘町のミルクでおもてなしする店を「ミルク王国の店」として認定し、各店がオリジナル商品を提供しています。</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    内灘町観光協会 © 2026
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      const surprise = document.getElementById('surprise');
+      const mainContent = document.getElementById('mainContent');
+      setTimeout(() => {
+        surprise.style.transition = 'opacity 1.2s ease';
+        surprise.style.opacity = '0';
+        mainContent.classList.add('visible');
+        mainContent.focus();
+      }, 3000);
+      setTimeout(() => {
+        surprise.style.display = 'none';
+      }, 4200);
+    });
+  </script>
+</body>
+</html>
